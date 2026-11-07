@@ -128,11 +128,11 @@
 		</p>
 		<p>
 			<code>Camera::generate_ray</code> maps the normalized point \((x, y) \in [0,1]^2\) onto a virtual sensor that sits one unit in front of the pinhole, at \(z = -1\) in camera space. The sensor spans \(\pm\tan(\text{hFov}/2)\) horizontally and \(\pm\tan(\text{vFov}/2)\) vertically, so the camera-space direction is
-			\[ \mathbf{d}_{cam} = \Big( (2x - 1)\tan\tfrac{\text{hFov}}{2},\; (2y - 1)\tan\tfrac{\text{vFov}}{2},\; -1 \Big). \]
+			\[ \mathbf{d}_{cam} = \Big( (2x - 1)\tan\frac{\text{hFov}}{2},\; (2y - 1)\tan\frac{\text{vFov}}{2},\; -1 \Big). \]
 			I rotate it into world space with the camera-to-world matrix <code>c2w</code> and normalize it. The ray starts at the camera position, with <code>min_t = nClip</code> and <code>max_t = fClip</code> so only geometry between the clipping planes counts.
 		</p>
 		<p>
-			Every primitive's <code>intersect</code> follows the same pattern: it only accepts a hit with \(t \in [\text{min\_t}, \text{max\_t}]\), and when it accepts one it <i>shrinks</i> <code>r.max_t</code> to that \(t\). After testing all primitives, the last recorded hit is automatically the nearest one, because any later candidate has to be closer to pass the range check. The intersection record stores \(t\), the surface normal, the primitive, and its BSDF.
+			Every primitive's <code>intersect</code> follows the same pattern: it only accepts a hit whose \(t\) is between <code>min_t</code> and <code>max_t</code>, and when it accepts one it <i>shrinks</i> <code>r.max_t</code> to that \(t\). After testing all primitives, the last recorded hit is automatically the nearest one, because any later candidate has to be closer to pass the range check. The intersection record stores \(t\), the surface normal, the primitive, and its BSDF.
 		</p>
 
 		<h3>Triangle intersection (Möller–Trumbore)</h3>
